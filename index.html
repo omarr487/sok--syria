@@ -2,7 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#ff9900">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>مستعمل سوريا - نظام إدارة متكامل</title>
     
     <style>
@@ -25,48 +29,293 @@
             margin: 0; 
             background: var(--light); 
             direction: rtl; 
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* الهيدر */
+        /* تحسينات للجوال */
+        * {
+            box-sizing: border-box;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        input, textarea, select {
+            -webkit-user-select: text;
+            -khtml-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
+        /* الهيدر للجوال */
         header { 
             background: var(--dark); 
             color: white; 
-            padding: 15px 5%; 
+            padding: 12px 4%; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             position: sticky; 
             top: 0; 
-            z-index: 1000; 
+            z-index: 1000;
+            height: 60px;
         }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 3%;
+                height: 56px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                padding: 8px 2%;
+                height: 52px;
+            }
+        }
+        
         .header-logo { 
             display: flex; 
             align-items: center; 
-            gap: 12px; 
-            cursor: pointer; 
+            gap: 10px; 
+            cursor: pointer;
+            max-width: 60%;
         }
+        
+        @media (max-width: 768px) {
+            .header-logo {
+                gap: 8px;
+            }
+        }
+        
         .header-logo-s { 
             background: var(--primary); 
-            padding: 5px 12px; 
+            padding: 5px 10px; 
             border-radius: 8px; 
             font-weight: 900; 
-            font-size: 22px; 
-            color: white; 
+            font-size: 20px; 
+            color: white;
+            min-width: 36px;
+            text-align: center;
         }
+        
+        @media (max-width: 480px) {
+            .header-logo-s {
+                font-size: 18px;
+                padding: 4px 8px;
+                min-width: 32px;
+            }
+        }
+        
         .header-logo-txt { 
-            font-size: 24px; 
+            font-size: 18px; 
             font-weight: bold; 
-            color: var(--primary); 
+            color: var(--primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
+        
+        @media (max-width: 768px) {
+            .header-logo-txt {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-logo-txt {
+                font-size: 14px;
+            }
+        }
+        
+        /* 🔥 زر القائمة للجوال */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        
+        .mobile-menu-btn span {
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            /* إخفاء بعض العناصر في الجوال */
+            .header-right-content {
+                display: none !important;
+            }
+            
+            .mobile-header-content {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-header-content {
+                display: none !important;
+            }
+        }
+        
+        /* 🔥 القائمة الجانبية للجوال */
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        
+        .mobile-sidebar.active {
+            right: 0;
+        }
+        
+        .mobile-sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9998;
+            display: none;
+        }
+        
+        .mobile-sidebar-overlay.active {
+            display: block;
+        }
+        
+        .mobile-sidebar-header {
+            background: var(--dark);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .mobile-sidebar-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .mobile-sidebar-body {
+            flex: 1;
+            padding: 20px 0;
+        }
+        
+        .mobile-sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--dark);
+            text-decoration: none;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.3s;
+        }
+        
+        .mobile-sidebar-item:hover {
+            background: #f8f8f8;
+        }
+        
+        .mobile-sidebar-item i {
+            font-size: 20px;
+            margin-left: 10px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .mobile-sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid #f0f0f0;
+            background: #f9f9f9;
+        }
+        
+        /* أزرار الجوال */
         .btn { 
             background: var(--primary); 
             color: white; 
             border: none; 
-            padding: 12px 25px; 
-            border-radius: 12px; 
+            padding: 10px 20px; 
+            border-radius: 10px; 
             font-weight: bold; 
-            cursor: pointer; 
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+        
+        @media (max-width: 768px) {
+            .btn {
+                padding: 8px 16px;
+                font-size: 13px;
+                height: 36px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .btn {
+                padding: 6px 12px;
+                font-size: 12px;
+                height: 34px;
+            }
+        }
+        
         .btn:hover { 
             background: #e68900; 
         }
@@ -82,28 +331,57 @@
             background: var(--blue);
         }
 
-        /* ============ الإعلانات ============ */
+        /* ============ الإعلانات للجوال ============ */
         .ad-premium {
             background: linear-gradient(135deg, var(--primary), #ff7700);
             color: white;
-            border-radius: 15px;
-            padding: 15px;
-            margin: 15px 5%;
+            border-radius: 12px;
+            padding: 12px;
+            margin: 12px 4%;
             text-align: center;
             position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             overflow: hidden;
+            font-size: 14px;
         }
+        
+        @media (max-width: 768px) {
+            .ad-premium {
+                margin: 10px 3%;
+                padding: 10px;
+                border-radius: 10px;
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ad-premium {
+                margin: 8px 2%;
+                padding: 8px;
+                border-radius: 8px;
+                font-size: 12px;
+            }
+        }
+        
         .ad-premium::before {
             content: "💰 إعلان";
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 8px;
+            left: 8px;
             background: rgba(255, 255, 255, 0.2);
-            padding: 3px 8px;
-            border-radius: 8px;
-            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 10px;
             font-weight: bold;
+        }
+        
+        @media (max-width: 480px) {
+            .ad-premium::before {
+                top: 6px;
+                left: 6px;
+                font-size: 9px;
+                padding: 2px 4px;
+            }
         }
         
         .ad-premium-blue {
@@ -123,240 +401,554 @@
         }
         
         .ad-small {
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 14px;
+            padding: 8px;
+            margin: 8px 0;
+            font-size: 12px;
         }
         
         .ad-medium {
-            padding: 12px;
-            margin: 12px 0;
-            font-size: 15px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 13px;
         }
 
-        /* البحث */
+        /* البحث للجوال */
         .search-area { 
-            padding: 15px 5%; 
+            padding: 12px 4%; 
             background: white; 
             border-bottom: 1px solid #eee; 
             display: flex; 
-            gap: 10px; 
+            gap: 8px; 
             justify-content: center; 
             flex-wrap: wrap;
         }
+        
+        @media (max-width: 768px) {
+            .search-area {
+                padding: 10px 3%;
+                gap: 6px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .search-area {
+                padding: 8px 2%;
+                gap: 4px;
+            }
+        }
+        
         .search-input { 
             width: 100%; 
             max-width: 500px; 
-            padding: 12px; 
+            padding: 10px; 
             border: 2px solid #eee; 
-            border-radius: 10px; 
+            border-radius: 8px; 
             outline: none; 
-            font-size: 16px; 
+            font-size: 14px;
+            height: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .search-input {
+                font-size: 13px;
+                height: 36px;
+                padding: 8px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .search-input {
+                font-size: 12px;
+                height: 34px;
+                padding: 6px;
+            }
         }
 
-        /* الفئات */
+        /* الفئات للجوال */
         .categories-menu {
             background: white;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 10px 5%;
+            border-radius: 8px;
+            padding: 8px;
+            margin: 8px 4%;
             display: none;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
+            max-height: 200px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
+        
+        @media (max-width: 768px) {
+            .categories-menu {
+                margin: 6px 3%;
+                padding: 6px;
+                gap: 5px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .categories-menu {
+                margin: 4px 2%;
+                padding: 4px;
+                gap: 4px;
+                max-height: 150px;
+            }
+        }
+        
         .category-tag {
             background: #f0f0f0;
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 5px 10px;
+            border-radius: 15px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
+            white-space: nowrap;
         }
+        
+        @media (max-width: 768px) {
+            .category-tag {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .category-tag {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+        }
+        
         .category-tag:hover, .category-tag.active {
             background: var(--primary);
             color: white;
         }
 
-        /* شبكة الإعلانات */
+        /* شبكة الإعلانات للجوال */
         .container { 
-            padding: 20px 5%; 
+            padding: 15px 4%; 
         }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px 3%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px 2%;
+            }
+        }
+        
         .ads-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-            gap: 20px; 
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+            gap: 15px;
         }
+        
+        @media (max-width: 768px) {
+            .ads-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ads-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .ads-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+        }
+        
         .ad-card { 
             background: white; 
-            border-radius: 15px; 
-            padding: 15px; 
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1); 
+            border-radius: 12px; 
+            padding: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
             cursor: pointer; 
             position: relative;
             border: 1px solid #eee;
+            transition: transform 0.2s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
+        
+        .ad-card:active {
+            transform: scale(0.98);
+        }
+        
+        @media (max-width: 768px) {
+            .ad-card {
+                padding: 10px;
+                border-radius: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ad-card {
+                padding: 8px;
+                border-radius: 8px;
+            }
+        }
+        
         .card-img-box { 
-            height: 180px; 
+            height: 140px; 
             background: #f8f8f8; 
-            border-radius: 10px; 
+            border-radius: 8px; 
             overflow: hidden; 
-            margin-bottom: 10px; 
+            margin-bottom: 8px; 
+            flex-shrink: 0;
         }
+        
+        @media (max-width: 768px) {
+            .card-img-box {
+                height: 120px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card-img-box {
+                height: 100px;
+            }
+        }
+        
         .card-img-box img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
         }
+        
         .condition-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 8px;
+            left: 8px;
             background: rgba(0,0,0,0.7);
             color: white;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 10px;
         }
+        
+        @media (max-width: 480px) {
+            .condition-badge {
+                font-size: 9px;
+                padding: 2px 4px;
+            }
+        }
+        
         .ad-price {
             color: var(--primary);
             font-weight: bold;
-            font-size: 18px;
-            margin: 5px 0;
-        }
-        .ad-title {
-            font-size: 16px;
-            margin: 5px 0;
+            font-size: 15px;
+            margin: 4px 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         
-        /* زر طلب المنتج */
+        @media (max-width: 768px) {
+            .ad-price {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ad-price {
+                font-size: 13px;
+            }
+        }
+        
+        .ad-title {
+            font-size: 14px;
+            margin: 4px 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.3;
+            height: 36px;
+            flex-grow: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .ad-title {
+                font-size: 13px;
+                height: 34px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ad-title {
+                font-size: 12px;
+                height: 32px;
+                -webkit-line-clamp: 2;
+            }
+        }
+        
+        /* 🔥 علامة "تم البيع" */
+        .sold-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(46, 204, 113, 0.95);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+            border: 3px solid white;
+            text-align: center;
+            width: 80%;
+        }
+        
+        @media (max-width: 480px) {
+            .sold-badge {
+                font-size: 12px;
+                padding: 6px 12px;
+                width: 85%;
+            }
+        }
+        
+        /* 🔥 تدرج على الصورة عندما يكون الإعلان مباع */
+        .sold-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            z-index: 5;
+        }
+        
         .btn-request {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 8px;
+            border-radius: 6px;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 8px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 12px;
+            height: 32px;
+            flex-shrink: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .btn-request {
+                font-size: 11px;
+                height: 30px;
+                padding: 6px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .btn-request {
+                font-size: 10px;
+                height: 28px;
+                padding: 5px;
+            }
         }
         
         .btn-request:hover {
             background: #e68900;
         }
 
-        /* ============ مودال الرفع ============ */
+        /* ============ مودال الرفع للجوال ============ */
         #upload-modal { 
             position: fixed; 
             top: 0; 
             left: 0; 
             width: 100%; 
             height: 100%; 
-            background: rgba(0,0,0,0.8); 
+            background: rgba(0,0,0,0.9); 
             display: none; 
             justify-content: center; 
-            align-items: center; 
-            z-index: 6000; 
+            align-items: flex-start; 
+            z-index: 6000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
+        
         .modal-body { 
             background: white; 
-            width: 90%; 
+            width: 100%; 
             max-width: 500px; 
-            padding: 20px; 
-            border-radius: 15px; 
+            padding: 15px; 
+            border-radius: 0; 
             position: relative; 
-            margin: 20px;
-            max-height: 90vh;
+            margin: 0;
+            max-height: 100vh;
             overflow-y: auto;
+            min-height: 100vh;
         }
+        
+        @media (min-width: 768px) {
+            .modal-body {
+                border-radius: 15px;
+                margin: 20px auto;
+                max-height: 90vh;
+                min-height: auto;
+            }
+        }
+        
         .close-x { 
-            position: absolute; 
+            position: fixed; 
             left: 15px; 
             top: 15px; 
             font-size: 24px; 
             cursor: pointer; 
-            background: #eee; 
-            width: 35px; 
-            height: 35px; 
+            background: rgba(0,0,0,0.5); 
+            width: 40px; 
+            height: 40px; 
             border-radius: 50%; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
+            color: white;
+            z-index: 6001;
+        }
+        
+        @media (max-width: 480px) {
+            .close-x {
+                left: 10px;
+                top: 10px;
+                width: 36px;
+                height: 36px;
+            }
         }
 
-        /* قسم الرفع */
+        /* قسم الرفع للجوال */
         .upload-section {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding: 0;
             background: transparent;
-            border-radius: 15px;
+            border-radius: 12px;
             border: 2px solid var(--primary);
             overflow: hidden;
         }
         
         .upload-section-header {
             background: var(--primary-light);
-            padding: 15px;
+            padding: 12px;
             border-bottom: 2px solid var(--primary);
         }
         
         .section-title {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: var(--dark);
-            font-size: 16px;
+            font-size: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+        }
+        
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 14px;
+            }
         }
         
         .section-subtitle {
             color: #666;
-            font-size: 14px;
+            font-size: 12px;
             margin: 0;
+            line-height: 1.3;
+        }
+        
+        @media (max-width: 480px) {
+            .section-subtitle {
+                font-size: 11px;
+            }
         }
         
         .upload-section-content {
-            padding: 15px;
+            padding: 12px;
             background: white;
         }
         
-        /* زر الرفع */
+        /* زر الرفع للجوال */
         .upload-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             background: var(--primary);
             color: white !important;
-            padding: 12px 20px;
-            border-radius: 10px;
+            padding: 10px 16px;
+            border-radius: 8px;
             cursor: pointer;
-            margin: 10px 0;
+            margin: 8px 0;
             border: none;
             font-weight: bold;
+            font-size: 13px;
+            width: 100%;
+            justify-content: center;
         }
         
-        /* معرض الصور */
+        @media (max-width: 480px) {
+            .upload-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+        
+        .upload-btn input[type="file"] {
+            display: none;
+        }
+        
+        /* معرض الصور للجوال */
         .gallery-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-            min-height: 50px;
-            padding: 15px;
+            gap: 8px;
+            margin-top: 8px;
+            min-height: 40px;
+            padding: 12px;
             background: var(--primary-light);
-            border-radius: 10px;
+            border-radius: 8px;
             border: 2px dashed rgba(255, 153, 0, 0.3);
+            justify-content: center;
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-container {
+                gap: 6px;
+                padding: 10px;
+            }
         }
         
         .gallery-item {
-            width: 100px;
-            height: 100px;
-            border-radius: 10px;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
             overflow: hidden;
             position: relative;
             border: 3px solid var(--primary);
             background: white;
+            flex-shrink: 0;
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-item {
+                width: 70px;
+                height: 70px;
+            }
         }
         
         .gallery-item.video {
@@ -370,27 +962,57 @@
             background: var(--danger);
             color: white;
             border: none;
-            width: 25px;
-            height: 25px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 14px;
+            padding: 0;
         }
         
-        /* الفورم */
-        .form-g { margin-bottom: 15px; }
-        .form-g label { display: block; margin-bottom: 5px; font-weight: bold; }
+        /* الفورم للجوال */
+        .form-g { margin-bottom: 12px; }
+        .form-g label { 
+            display: block; 
+            margin-bottom: 4px; 
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            .form-g label {
+                font-size: 13px;
+            }
+        }
+        
         .form-g input, .form-g select, .form-g textarea { 
             width: 100%; 
             padding: 10px; 
             border: 1px solid #ddd; 
             border-radius: 8px; 
-            box-sizing: border-box; 
+            box-sizing: border-box;
+            font-size: 14px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        
+        @media (max-width: 480px) {
+            .form-g input, .form-g select, .form-g textarea {
+                padding: 8px;
+                font-size: 13px;
+            }
+        }
+        
+        .form-g textarea {
+            resize: vertical;
+            min-height: 80px;
         }
 
-        /* ============ صفحة المنتج الجديدة ============ */
+        /* ============ صفحة المنتج للجوال ============ */
         #product-layer { 
             position: fixed; 
             top: 0; 
@@ -400,53 +1022,107 @@
             background: white; 
             display: none; 
             z-index: 4000; 
-            overflow-y: auto; 
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
+        
         .nav-back { 
             padding: 15px; 
-            font-size: 18px; 
+            font-size: 16px; 
             font-weight: bold; 
             cursor: pointer; 
             color: var(--primary); 
             background: #f5f5f5;
             border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 56px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+        
+        @media (max-width: 480px) {
+            .nav-back {
+                padding: 12px;
+                font-size: 15px;
+                height: 52px;
+            }
+        }
+        
+        .nav-back::before {
+            content: "←";
+            font-size: 20px;
+        }
+        
         .product-container { 
             width: 100%; 
             max-width: 1200px; 
             margin: 0 auto; 
-            padding: 20px; 
+            padding: 15px; 
         }
         
-        /* تصميم صفحة المنتج الجديد */
+        @media (max-width: 768px) {
+            .product-container {
+                padding: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .product-container {
+                padding: 10px;
+            }
+        }
+        
+        /* تصميم صفحة المنتج للجوال */
         .product-main-section {
             display: flex;
-            gap: 40px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (min-width: 992px) {
+            .product-main-section {
+                flex-direction: row;
+                gap: 30px;
+            }
         }
         
         .product-images-section {
             flex: 1;
-            min-width: 300px;
+            width: 100%;
         }
         
         .product-info-section {
             flex: 1;
-            min-width: 300px;
+            width: 100%;
         }
         
         .main-image-container {
             width: 100%;
-            height: 400px;
+            height: 300px;
             background: #f8f8f8;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .main-image-container {
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-image-container {
+                height: 200px;
+            }
         }
         
         .main-image-container img, .main-image-container video {
@@ -457,20 +1133,34 @@
         
         .thumbnails-gallery {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow-x: auto;
-            padding: 10px 0;
-            margin-bottom: 20px;
+            padding: 8px 0;
+            margin-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        @media (max-width: 480px) {
+            .thumbnails-gallery {
+                gap: 6px;
+            }
         }
         
         .thumbnail-item {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
             border: 2px solid #eee;
             flex-shrink: 0;
+        }
+        
+        @media (max-width: 480px) {
+            .thumbnail-item {
+                width: 60px;
+                height: 60px;
+            }
         }
         
         .thumbnail-item.active {
@@ -484,44 +1174,93 @@
         }
         
         .product-title {
-            font-size: 28px;
-            margin: 0 0 15px 0;
+            font-size: 22px;
+            margin: 0 0 12px 0;
             color: var(--dark);
             font-weight: bold;
+            line-height: 1.2;
         }
         
-        .product-rating {
+        @media (max-width: 768px) {
+            .product-title {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .product-title {
+                font-size: 18px;
+            }
+        }
+        
+        /* 🔥 نظام التقييمات */
+        .rating-system {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 15px;
-            color: #666;
         }
         
         .rating-stars {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .rating-star {
+            font-size: 20px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .rating-star.active {
             color: #ffc107;
-            font-size: 18px;
+        }
+        
+        .rating-value {
+            font-size: 14px;
+            color: #666;
         }
         
         .product-price {
             color: var(--primary);
-            font-size: 32px;
+            font-size: 26px;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 15px 0;
+        }
+        
+        @media (max-width: 480px) {
+            .product-price {
+                font-size: 22px;
+            }
         }
         
         .product-specs {
             background: #f9f9f9;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+        
+        @media (max-width: 480px) {
+            .product-specs {
+                padding: 12px;
+            }
         }
         
         .spec-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            .spec-item {
+                font-size: 13px;
+                padding: 6px 0;
+            }
         }
         
         .spec-item:last-child {
@@ -539,29 +1278,37 @@
         
         .product-description {
             background: #f9f9f9;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
             line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            .product-description {
+                padding: 12px;
+                font-size: 13px;
+            }
         }
         
         .seller-info-card {
             background: #f0f8ff;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
         }
         
         .seller-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 12px;
         }
         
         .seller-avatar {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: var(--primary);
             display: flex;
@@ -569,7 +1316,8 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 24px;
+            font-size: 20px;
+            flex-shrink: 0;
         }
         
         .seller-details {
@@ -578,64 +1326,96 @@
         
         .seller-name {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
+        }
+        
+        @media (max-width: 480px) {
+            .seller-name {
+                font-size: 15px;
+            }
         }
         
         .seller-city {
             color: #666;
-            font-size: 14px;
+            font-size: 13px;
         }
         
         .product-actions {
-            margin-top: 30px;
+            margin-top: 20px;
             display: flex;
-            gap: 15px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         
-        /* قسم الاقتراحات */
+        /* قسم الاقتراحات للجوال */
         .recommendations-section {
-            margin-top: 50px;
+            margin-top: 30px;
             border-top: 2px solid #eee;
-            padding-top: 30px;
+            padding-top: 20px;
         }
         
         .section-title-large {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             color: var(--dark);
             text-align: center;
         }
         
+        @media (max-width: 480px) {
+            .section-title-large {
+                font-size: 18px;
+            }
+        }
+        
         .recommendations-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .recommendations-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .recommendations-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
         }
         
         .recommendation-card {
             background: white;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             cursor: pointer;
             border: 1px solid #eee;
-            transition: transform 0.3s;
+            transition: transform 0.2s;
         }
         
-        .recommendation-card:hover {
-            transform: translateY(-5px);
+        .recommendation-card:active {
+            transform: translateY(-3px);
         }
         
         .recommendation-img {
             width: 100%;
-            height: 160px;
+            height: 120px;
             background: #f8f8f8;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 480px) {
+            .recommendation-img {
+                height: 100px;
+            }
         }
         
         .recommendation-img img {
@@ -645,20 +1425,38 @@
         }
         
         .recommendation-title {
-            font-size: 15px;
-            margin: 5px 0;
-            height: 40px;
+            font-size: 13px;
+            margin: 4px 0;
+            height: 36px;
             overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.3;
+        }
+        
+        @media (max-width: 480px) {
+            .recommendation-title {
+                font-size: 12px;
+                height: 34px;
+            }
         }
         
         .recommendation-price {
             color: var(--primary);
             font-weight: bold;
-            font-size: 16px;
-            margin: 5px 0;
+            font-size: 14px;
+            margin: 4px 0;
+        }
+        
+        @media (max-width: 480px) {
+            .recommendation-price {
+                font-size: 13px;
+            }
         }
 
-        /* ============ الدردشة مع إعلانات ============ */
+        /* ============ 🔥 الدردشة المحسنة مع إرسال صوت وصورة وفيديو ============ */
         #chat-layer { 
             position: fixed; 
             top: 0; 
@@ -668,183 +1466,523 @@
             background: white; 
             display: none; 
             flex-direction: column; 
-            z-index: 7000; 
+            z-index: 7000;
         }
+        
         .chat-header { 
             padding: 15px; 
             background: var(--dark); 
             color: white; 
             display: flex; 
             align-items: center; 
-            gap: 15px; 
+            justify-content: space-between;
+            height: 60px;
+            flex-shrink: 0;
         }
+        
+        @media (max-width: 480px) {
+            .chat-header {
+                padding: 12px;
+                height: 56px;
+            }
+        }
+        
+        .chat-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .chat-back-btn {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .chat-title {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
         .chat-messages { 
             flex: 1; 
             padding: 15px; 
             overflow-y: auto; 
             display: flex; 
             flex-direction: column; 
-            gap: 10px; 
-            background: #f4f4f4; 
+            gap: 12px; 
+            background: #f4f4f4;
+            -webkit-overflow-scrolling: touch;
         }
+        
+        @media (max-width: 480px) {
+            .chat-messages {
+                padding: 12px;
+            }
+        }
+        
         .msg { 
-            max-width: 80%; 
-            padding: 10px 15px; 
-            border-radius: 10px; 
-            font-size: 14px; 
+            max-width: 85%; 
+            padding: 12px 15px; 
+            border-radius: 15px; 
+            font-size: 14px;
+            word-wrap: break-word;
+            position: relative;
         }
+        
+        @media (max-width: 480px) {
+            .msg {
+                max-width: 90%;
+                font-size: 13px;
+                padding: 10px 12px;
+            }
+        }
+        
         .msg.sent { 
             align-self: flex-end; 
             background: var(--primary); 
             color: white; 
+            border-bottom-right-radius: 5px;
         }
+        
         .msg.received { 
             align-self: flex-start; 
             background: white; 
+            border-bottom-left-radius: 5px;
         }
+        
+        .msg-time {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 5px;
+            text-align: left;
+        }
+        
+        /* 🔥 رسائل الوسائط المتعددة */
+        .media-msg {
+            padding: 10px;
+            border-radius: 15px;
+            max-width: 250px;
+            background: white;
+            border: 1px solid #eee;
+        }
+        
+        .media-msg.sent {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+        
+        .media-preview {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        .media-preview img, .media-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .audio-player {
+            width: 100%;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 10px;
+        }
+        
+        .audio-player audio {
+            width: 100%;
+            height: 40px;
+        }
+        
+        .media-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .media-icon {
+            font-size: 20px;
+        }
+        
+        /* 🔥 أزرار الوسائط المتعددة في الدردشة */
+        .chat-media-buttons {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+        
+        .media-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+        
+        .media-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .media-btn.photo {
+            color: #2196F3;
+        }
+        
+        .media-btn.video {
+            color: #FF5722;
+        }
+        
+        .media-btn.audio {
+            color: #4CAF50;
+        }
+        
         .chat-input-area {
-            padding: 15px;
+            padding: 12px;
             background: white;
             border-top: 1px solid #eee;
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            align-items: center;
+            flex-shrink: 0;
         }
+        
+        .chat-input-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8f8f8;
+            border-radius: 25px;
+            padding: 8px 15px;
+        }
+        
         .chat-input-area input {
             flex: 1;
-            padding: 12px;
-            border: 2px solid #eee;
-            border-radius: 8px;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            height: 40px;
+            outline: none;
         }
-        .chat-input-area button {
+        
+        @media (max-width: 480px) {
+            .chat-input-area input {
+                padding: 8px;
+                font-size: 13px;
+                height: 36px;
+            }
+        }
+        
+        .chat-send-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0 20px;
-            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
             cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (max-width: 480px) {
+            .chat-send-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+        
+        /* 🔥 تسجيل الصوت */
+        .voice-recorder {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 7001;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .voice-recorder.active {
+            display: flex;
+        }
+        
+        .recording-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--danger);
+        }
+        
+        .recording-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        .recording-timer {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .recording-controls {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .record-btn, .stop-btn, .cancel-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .record-btn {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .stop-btn {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .cancel-btn {
+            background: #666;
+            color: white;
+        }
+        
+        .recording-wave {
+            display: flex;
+            gap: 4px;
+            height: 30px;
+            align-items: flex-end;
+        }
+        
+        .wave-bar {
+            width: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+            animation: wave 1.5s ease-in-out infinite;
+        }
+        
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; height: 70%; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 90%; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; height: 100%; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; height: 85%; }
+        .wave-bar:nth-child(6) { animation-delay: 0.5s; height: 75%; }
+        .wave-bar:nth-child(7) { animation-delay: 0.6s; height: 95%; }
+        
+        @keyframes wave {
+            0%, 100% { height: 50%; }
+            50% { height: 100%; }
         }
 
-        /* ============ 🔥 الإشعارات ============ */
+        /* ============ 🔥 الإشعارات للجوال ============ */
         .notification {
             position: fixed;
             top: 20px;
-            right: 20px;
+            right: 10px;
+            left: 10px;
             background: linear-gradient(135deg, var(--primary), #ff7700);
             color: white;
-            padding: 15px 20px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(255, 153, 0, 0.3);
+            padding: 12px 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(255, 153, 0, 0.3);
             z-index: 10000;
             display: none;
             animation: slideIn 0.4s ease;
-            max-width: 350px;
             font-weight: 500;
             border: none;
-            font-size: 15px;
-            text-align: right;
+            font-size: 14px;
+            text-align: center;
+            max-width: calc(100% - 20px);
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 480px) {
+            .notification {
+                padding: 10px 12px;
+                font-size: 13px;
+                right: 8px;
+                left: 8px;
+                max-width: calc(100% - 16px);
+            }
         }
         
         .notification::before {
             content: "🔔";
-            margin-left: 10px;
-            font-size: 18px;
+            margin-left: 8px;
+            font-size: 16px;
         }
         
         @keyframes slideIn {
             from { 
-                right: -400px; 
+                transform: translateY(-100%) translateX(-50%);
                 opacity: 0; 
-                transform: translateY(-20px);
             }
             to { 
-                right: 20px; 
+                transform: translateY(0) translateX(-50%);
                 opacity: 1; 
-                transform: translateY(0);
             }
         }
         
         @keyframes slideOut {
             from { 
-                right: 20px; 
+                transform: translateY(0) translateX(-50%);
                 opacity: 1; 
             }
             to { 
-                right: -400px; 
+                transform: translateY(-100%) translateX(-50%);
                 opacity: 0; 
             }
         }
         
         .notification.warning {
             background: linear-gradient(135deg, #ffa726, #ff9800);
-            box-shadow: 0 5px 20px rgba(255, 167, 38, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 167, 38, 0.3);
         }
         
         .notification.success {
             background: linear-gradient(135deg, #66bb6a, #4caf50);
-            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
         }
         
         .notification.info {
             background: linear-gradient(135deg, #42a5f5, #2196f3);
-            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.3);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
         }
         
         .notification.error {
             background: linear-gradient(135deg, #ef5350, #f44336);
-            box-shadow: 0 5px 20px rgba(244, 67, 54, 0.3);
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
         }
         
-        /* إعلانات داخل المحتوى */
+        /* إعلانات داخل المحتوى للجوال */
         .inline-ad {
-            margin: 20px 0;
+            margin: 15px 0;
             text-align: center;
         }
         
         .sticky-ad {
             position: sticky;
-            top: 80px;
+            top: 60px;
             z-index: 500;
         }
         
-        /* ============ 🔥 مودال الحساب الجديد مع الأدوار ============ */
+        @media (max-width: 768px) {
+            .sticky-ad {
+                top: 56px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sticky-ad {
+                top: 52px;
+            }
+        }
+
+        /* ============ 🔥 مودال الحساب للجوال ============ */
         #account-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             display: none;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             z-index: 9000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .account-box {
             background: white;
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
+            padding: 20px;
+            border-radius: 0;
+            width: 100%;
             max-width: 450px;
-            max-height: 90vh;
+            max-height: 100vh;
             overflow-y: auto;
+            min-height: 100vh;
+        }
+        
+        @media (min-width: 768px) {
+            .account-box {
+                border-radius: 15px;
+                margin: 20px auto;
+                max-height: 90vh;
+                min-height: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .account-box {
+                padding: 15px;
+            }
         }
         
         .account-tabs {
             display: flex;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border-bottom: 2px solid #eee;
         }
         
         .account-tab {
             flex: 1;
             text-align: center;
-            padding: 15px;
+            padding: 12px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 15px;
             color: #666;
             transition: all 0.3s;
+        }
+        
+        @media (max-width: 480px) {
+            .account-tab {
+                padding: 10px;
+                font-size: 14px;
+            }
         }
         
         .account-tab:hover {
@@ -866,25 +2004,44 @@
         
         .account-input {
             width: 100%;
-            padding: 14px;
-            margin: 12px 0;
+            padding: 12px;
+            margin: 10px 0;
             border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 15px;
             box-sizing: border-box;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        
+        @media (max-width: 480px) {
+            .account-input {
+                padding: 10px;
+                font-size: 14px;
+            }
         }
         
         .account-btn {
             width: 100%;
-            padding: 15px;
-            margin: 15px 0;
+            padding: 12px;
+            margin: 12px 0;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
+            height: 46px;
+        }
+        
+        @media (max-width: 480px) {
+            .account-btn {
+                padding: 10px;
+                font-size: 14px;
+                height: 42px;
+            }
         }
         
         .account-btn:hover {
@@ -893,23 +2050,31 @@
         
         .profile-pic-container {
             text-align: center;
-            margin: 20px 0;
+            margin: 15px 0;
         }
         
         .profile-pic {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             background: #f5f5f5;
-            margin: 0 auto 15px;
+            margin: 0 auto 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             border: 3px solid var(--primary);
             overflow: hidden;
-            font-size: 40px;
+            font-size: 36px;
             color: #666;
+        }
+        
+        @media (max-width: 480px) {
+            .profile-pic {
+                width: 90px;
+                height: 90px;
+                font-size: 32px;
+            }
         }
         
         .profile-pic img {
@@ -921,19 +2086,19 @@
         .change-pic-btn {
             color: var(--blue);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
         }
         
         .user-info-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin: 15px 0;
+            gap: 12px;
+            margin: 12px 0;
         }
         
         .user-avatar-small {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: var(--primary);
             display: flex;
@@ -941,34 +2106,59 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 18px;
+            flex-shrink: 0;
         }
         
         .logout-btn {
             background: var(--danger);
             color: white;
             border: none;
-            padding: 8px 20px;
-            border-radius: 8px;
+            padding: 6px 16px;
+            border-radius: 6px;
             cursor: pointer;
-            margin-left: 10px;
+            margin-left: 8px;
+            font-size: 13px;
+            height: 34px;
+            white-space: nowrap;
         }
         
-        /* 🔥 شروط وسياسة الخصوصية */
+        @media (max-width: 480px) {
+            .logout-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+                height: 32px;
+            }
+        }
+        
+        /* 🔥 شروط وسياسة الخصوصية للجوال */
         .terms-checkbox {
-            margin: 15px 0;
-            padding: 15px;
+            margin: 12px 0;
+            padding: 12px;
             background: #f9f9f9;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 1px solid #eee;
+        }
+        
+        @media (max-width: 480px) {
+            .terms-checkbox {
+                padding: 10px;
+            }
         }
         
         .terms-label {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 480px) {
+            .terms-label {
+                font-size: 12px;
+            }
         }
         
         .terms-link {
@@ -977,75 +2167,115 @@
             text-decoration: underline;
         }
         
-        /* 🔥 مودال الشروط */
+        /* 🔥 مودال الشروط للجوال */
         #terms-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             display: none;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             z-index: 9500;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .terms-box {
             background: white;
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
+            padding: 20px;
+            border-radius: 0;
+            width: 100%;
             max-width: 600px;
-            max-height: 90vh;
+            max-height: 100vh;
             overflow-y: auto;
+            min-height: 100vh;
+        }
+        
+        @media (min-width: 768px) {
+            .terms-box {
+                border-radius: 15px;
+                margin: 20px auto;
+                max-height: 90vh;
+                min-height: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .terms-box {
+                padding: 15px;
+            }
         }
         
         .terms-content {
-            margin: 20px 0;
-            max-height: 400px;
+            margin: 15px 0;
+            max-height: 60vh;
             overflow-y: auto;
-            padding: 15px;
+            padding: 12px;
             background: #f9f9f9;
-            border-radius: 10px;
+            border-radius: 8px;
+            -webkit-overflow-scrolling: touch;
         }
         
         .terms-section {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.5;
         }
         
-        /* 🔥 خانة واحدة للرقم أو الإيميل */
+        @media (max-width: 480px) {
+            .terms-section {
+                font-size: 13px;
+            }
+        }
+        
+        /* 🔥 خانة واحدة للرقم أو الإيميل للجوال */
         .login-info {
             text-align: center;
-            margin: 10px 0;
+            margin: 8px 0;
             padding: 8px;
             background: #f5f5f5;
-            border-radius: 8px;
-            font-size: 13px;
+            border-radius: 6px;
+            font-size: 12px;
             color: #666;
+            line-height: 1.4;
         }
         
-        /* ============ 🔥 مودال الإشعارات ============ */
+        /* ============ 🔥 مودال الإشعارات للجوال ============ */
         #notifications-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.9);
             display: none;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             z-index: 8000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .notifications-box {
             background: white;
-            width: 90%;
+            width: 100%;
             max-width: 400px;
-            border-radius: 20px;
+            border-radius: 0;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            min-height: 100vh;
+        }
+        
+        @media (min-width: 768px) {
+            .notifications-box {
+                border-radius: 15px;
+                margin: 20px auto;
+                min-height: auto;
+                max-height: 90vh;
+            }
         }
         
         .notifications-header {
@@ -1055,27 +2285,45 @@
             text-align: center;
             font-size: 18px;
             font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        @media (max-width: 480px) {
+            .notifications-header {
+                padding: 16px;
+                font-size: 16px;
+            }
         }
         
         .notifications-header::before {
             content: "🔔";
-            margin-left: 10px;
-            font-size: 20px;
+            margin-left: 8px;
+            font-size: 18px;
         }
         
         .notifications-body {
-            max-height: 400px;
+            max-height: 60vh;
             overflow-y: auto;
             padding: 0;
+            -webkit-overflow-scrolling: touch;
         }
         
         .notification-item {
-            padding: 15px 20px;
+            padding: 12px 15px;
             border-bottom: 1px solid #eee;
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 10px;
             transition: background 0.3s;
+        }
+        
+        @media (max-width: 480px) {
+            .notification-item {
+                padding: 10px 12px;
+                gap: 8px;
+            }
         }
         
         .notification-item:hover {
@@ -1088,16 +2336,24 @@
         }
         
         .notification-icon {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             background: var(--primary-light);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
             color: var(--primary);
             flex-shrink: 0;
+        }
+        
+        @media (max-width: 480px) {
+            .notification-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
         }
         
         .notification-content {
@@ -1106,32 +2362,38 @@
         
         .notification-title {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: var(--dark);
-            font-size: 15px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            .notification-title {
+                font-size: 13px;
+            }
         }
         
         .notification-message {
             color: #666;
-            font-size: 13px;
-            line-height: 1.4;
-            margin-bottom: 5px;
+            font-size: 12px;
+            line-height: 1.3;
+            margin-bottom: 4px;
         }
         
         .notification-time {
-            font-size: 11px;
+            font-size: 10px;
             color: #999;
         }
         
         .no-notifications {
             text-align: center;
-            padding: 40px 20px;
+            padding: 40px 15px;
             color: #999;
         }
         
         .no-notifications::before {
             content: "🔔";
-            font-size: 40px;
+            font-size: 36px;
             display: block;
             margin-bottom: 10px;
             opacity: 0.5;
@@ -1141,41 +2403,66 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 10px 16px;
+            border-radius: 8px;
             cursor: pointer;
-            margin: 15px;
+            margin: 12px;
             font-weight: bold;
-            width: calc(100% - 30px);
+            width: calc(100% - 24px);
+            height: 42px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            .mark-all-read {
+                padding: 8px 12px;
+                margin: 10px;
+                width: calc(100% - 20px);
+                height: 38px;
+                font-size: 13px;
+            }
         }
         
         .mark-all-read:hover {
             background: #e68900;
         }
         
-        /* ============ 🔥 لوحة تحكم الإدارة الجديدة ============ */
+        /* ============ 🔥 لوحة تحكم الإدارة للجوال ============ */
         #admin-dashboard-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             display: none;
             z-index: 10000;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .admin-header {
             background: linear-gradient(135deg, var(--admin), #8e44ad);
             color: white;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 60px;
+        }
+        
+        @media (max-width: 480px) {
+            .admin-header {
+                padding: 12px;
+                font-size: 18px;
+                height: 56px;
+            }
         }
         
         .admin-header-owner {
@@ -1183,54 +2470,90 @@
         }
         
         .admin-container {
-            padding: 20px;
+            padding: 15px;
             max-width: 1400px;
             margin: 0 auto;
         }
         
+        @media (max-width: 480px) {
+            .admin-container {
+                padding: 12px;
+            }
+        }
+        
         .admin-stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+        
+        @media (max-width: 480px) {
+            .admin-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
         }
         
         .admin-stat-card {
             background: white;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 480px) {
+            .admin-stat-card {
+                padding: 12px;
+            }
         }
         
         .admin-stat-value {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: bold;
             color: var(--primary);
-            margin: 10px 0;
+            margin: 8px 0;
+        }
+        
+        @media (max-width: 480px) {
+            .admin-stat-value {
+                font-size: 24px;
+            }
         }
         
         .admin-stat-label {
             color: #666;
-            font-size: 14px;
+            font-size: 12px;
         }
         
         .admin-tabs {
             display: flex;
             background: white;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
-            margin: 20px 0;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
         }
         
         .admin-tab {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
+            font-size: 14px;
+            min-width: 120px;
+        }
+        
+        @media (max-width: 480px) {
+            .admin-tab {
+                padding: 10px;
+                font-size: 13px;
+                min-width: 100px;
+            }
         }
         
         .admin-tab:hover {
@@ -1244,11 +2567,17 @@
         
         .admin-section {
             background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
             display: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 480px) {
+            .admin-section {
+                padding: 12px;
+            }
         }
         
         .admin-section.active {
@@ -1258,20 +2587,32 @@
         .admin-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
         }
         
         .admin-table th {
             background: #f5f5f5;
-            padding: 12px;
+            padding: 10px;
             text-align: right;
             font-weight: bold;
             border-bottom: 2px solid #eee;
+            font-size: 12px;
+            white-space: nowrap;
         }
         
         .admin-table td {
-            padding: 12px;
+            padding: 10px;
             border-bottom: 1px solid #eee;
+            font-size: 12px;
         }
         
         .admin-table tr:hover {
@@ -1281,34 +2622,43 @@
         .badge-owner {
             background: var(--owner);
             color: white;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 3px 6px;
+            border-radius: 15px;
+            font-size: 11px;
         }
         
         .badge-admin {
             background: var(--admin);
             color: white;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 3px 6px;
+            border-radius: 15px;
+            font-size: 11px;
         }
         
         .badge-user {
             background: var(--blue);
             color: white;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 3px 6px;
+            border-radius: 15px;
+            font-size: 11px;
         }
         
         .action-btn {
-            padding: 6px 12px;
+            padding: 5px 10px;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
-            margin: 0 5px;
-            font-size: 12px;
+            margin: 2px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        
+        @media (max-width: 480px) {
+            .action-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+                margin: 1px;
+            }
         }
         
         .action-delete {
@@ -1333,26 +2683,41 @@
         
         .search-admin {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 2px solid #eee;
-            border-radius: 10px;
-            margin: 10px 0;
-            font-size: 16px;
+            border-radius: 8px;
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            .search-admin {
+                padding: 8px;
+                font-size: 13px;
+            }
         }
         
         .role-selector {
             display: flex;
-            gap: 10px;
-            margin: 20px 0;
+            gap: 8px;
+            margin: 15px 0;
             flex-wrap: wrap;
         }
         
         .role-option {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: 2px solid #eee;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 13px;
+        }
+        
+        @media (max-width: 480px) {
+            .role-option {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
         }
         
         .role-option:hover {
@@ -1365,43 +2730,83 @@
             font-weight: bold;
         }
         
-        /* ============ 🔥 صندوق إضافة مدير ============ */
+        /* ============ 🔥 صندوق إضافة مدير للجوال ============ */
         #add-manager-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.95);
             display: none;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             z-index: 11000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .add-manager-box {
             background: white;
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
+            padding: 20px;
+            border-radius: 0;
+            width: 100%;
             max-width: 500px;
+            max-height: 100vh;
+            overflow-y: auto;
+            min-height: 100vh;
+        }
+        
+        @media (min-width: 768px) {
+            .add-manager-box {
+                border-radius: 15px;
+                margin: 20px auto;
+                max-height: 90vh;
+                min-height: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .add-manager-box {
+                padding: 15px;
+            }
         }
         
         .manager-form {
-            margin: 20px 0;
+            margin: 15px 0;
         }
         
-        /* ============ 🔥 زر الإدارة في الهيدر ============ */
+        /* ============ 🔥 زر الإدارة في الهيدر للجوال ============ */
         .admin-btn {
             background: var(--admin);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 6px 12px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-right: 10px;
+            margin-right: 8px;
             font-weight: bold;
             display: none;
+            font-size: 12px;
+            height: 34px;
+            white-space: nowrap;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-btn {
+                padding: 5px 10px;
+                font-size: 11px;
+                height: 32px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .admin-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+                height: 30px;
+                margin-right: 6px;
+            }
         }
         
         .admin-btn:hover {
@@ -1416,24 +2821,258 @@
             background: #c0392b;
         }
         
-        /* ============ 🔥 تحسينات الواجهة ============ */
+        /* ============ 🔥 تحسينات الواجهة للجوال ============ */
         .user-role-badge {
             display: inline-block;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
             font-weight: bold;
-            margin-right: 5px;
+            margin-right: 4px;
         }
         
         .role-owner { background: var(--owner); color: white; }
         .role-admin { background: var(--admin); color: white; }
         .role-user { background: var(--blue); color: white; }
+        
+        /* ============ تحسينات الهيدر للجوال ============ */
+        .header-right-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            flex-wrap: nowrap;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .header-right-content {
+                gap: 6px;
+            }
+        }
+        
+        /* تحسينات إضافية للجوال */
+        .mobile-only {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-only {
+                display: block;
+            }
+            
+            .desktop-only {
+                display: none;
+            }
+        }
+        
+        /* منع التكبير على الجوال */
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        textarea,
+        select {
+            font-size: 16px !important;
+        }
+        
+        @media (max-width: 768px) {
+            input[type="text"],
+            input[type="number"],
+            input[type="email"],
+            input[type="password"],
+            textarea,
+            select {
+                font-size: 14px !important;
+            }
+        }
+        
+        /* تحسينات للشاشات الصغيرة جدا */
+        @media (max-width: 320px) {
+            .header-logo-txt {
+                font-size: 12px;
+            }
+            
+            .btn {
+                padding: 4px 8px;
+                font-size: 11px;
+                height: 30px;
+            }
+            
+            .admin-btn {
+                padding: 3px 6px;
+                font-size: 9px;
+                height: 28px;
+            }
+            
+            .logout-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+                height: 28px;
+            }
+        }
+        
+        /* تحسينات للزر الموجود في الهيدر */
+        #login-header-btn {
+            min-width: 80px;
+        }
+        
+        /* تحسينات للتنبيهات على الجوال */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--primary);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 480px) {
+            .notification-badge {
+                width: 16px;
+                height: 16px;
+                font-size: 9px;
+                top: -4px;
+                right: -4px;
+            }
+        }
+        
+        /* تحسينات للفورم على الجوال */
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
+        }
+        
+        /* تحسينات للروابط على الجوال */
+        .terms-link {
+            touch-action: manipulation;
+        }
+        
+        /* تحسينات للأسهم في select على الجوال */
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: left 10px center;
+            background-size: 16px;
+            padding-left: 40px;
+        }
+        
+        /* تحسينات للزر الخلفي على الجوال */
+        .nav-back {
+            touch-action: manipulation;
+        }
+        
+        .nav-back:active {
+            background-color: #e8e8e8;
+        }
+        
+        /* تحسينات للكروت على الجوال */
+        .ad-card:active, .recommendation-card:active {
+            background-color: #f8f8f8;
+        }
+        
+        /* تحسينات للأزرار على الجوال */
+        .btn:active, .account-btn:active, .btn-request:active {
+            transform: scale(0.98);
+        }
+        
+        /* إضافة هامش سفلي للجوال لحماية الزر من الـ notch */
+        @supports (padding: max(0px)) {
+            body {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="notification" class="notification"></div>
+
+    <!-- 🔥 القائمة الجانبية للجوال -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="mobile-sidebar-header">
+            <div class="mobile-sidebar-avatar" id="mobileAvatar">
+                👤
+            </div>
+            <div>
+                <div style="font-weight: bold; color: white;" id="mobileUserName">زائر</div>
+                <div style="font-size: 12px; color: #ccc;" id="mobileUserCity"></div>
+            </div>
+        </div>
+        
+        <div class="mobile-sidebar-body">
+            <a href="javascript:void(0)" class="mobile-sidebar-item" onclick="closeMobileMenu(); location.reload();">
+                <i>🏠</i>
+                <span>الصفحة الرئيسية</span>
+            </a>
+            
+            <a href="javascript:void(0)" class="mobile-sidebar-item" onclick="closeMobileMenu(); checkAuthBeforePost();">
+                <i>➕</i>
+                <span>رفع إعلان جديد</span>
+            </a>
+            
+            <a href="javascript:void(0)" class="mobile-sidebar-item" onclick="closeMobileMenu(); openAccountModal('login');">
+                <i>👤</i>
+                <span>تسجيل الدخول</span>
+            </a>
+            
+            <a href="javascript:void(0)" class="mobile-sidebar-item" onclick="closeMobileMenu(); openAccountModal('register');">
+                <i>📝</i>
+                <span>إنشاء حساب</span>
+            </a>
+            
+            <a href="javascript:void(0)" class="mobile-sidebar-item" onclick="closeMobileMenu(); showNotifications();">
+                <i>🔔</i>
+                <span>الإشعارات</span>
+                <span class="notification-badge" id="mobileNotificationBadge" style="position: static; margin-right: auto; display: none;">0</span>
+            </a>
+            
+            <a href="javascript:void(0)" class="mobile-sidebar-item" onclick="closeMobileMenu(); openAdminDashboard();">
+                <i>👨‍💼</i>
+                <span>لوحة التحكم</span>
+            </a>
+            
+            <a href="javascript:void(0)" class="mobile-sidebar-item" onclick="closeMobileMenu(); openTermsModal();">
+                <i>📜</i>
+                <span>الشروط والخصوصية</span>
+            </a>
+            
+            <div class="mobile-sidebar-item" onclick="closeMobileMenu(); filterAdsByCategory('جميع');">
+                <i>📦</i>
+                <span>جميع الإعلانات</span>
+            </div>
+            
+            <!-- الفئات في القائمة الجانبية -->
+            <div style="padding: 15px 20px 10px; font-weight: bold; color: var(--primary); border-bottom: 1px solid #f0f0f0;">
+                <i>🏷️</i>
+                <span>الفئات</span>
+            </div>
+            
+            <div id="mobileCategoriesList" style="max-height: 200px; overflow-y: auto;">
+                <!-- سيتم تعبئتها بالجافاسكريبت -->
+            </div>
+        </div>
+        
+        <div class="mobile-sidebar-footer">
+            <button class="btn" onclick="closeMobileMenu();" style="width: 100%; margin-bottom: 10px;">
+                إغلاق القائمة
+            </button>
+            <div style="text-align: center; font-size: 12px; color: #666;">
+                مستعمل سوريا © 2024
+            </div>
+        </div>
+    </div>
+    
+    <div class="mobile-sidebar-overlay" id="mobileSidebarOverlay" onclick="closeMobileMenu()"></div>
 
     <!-- 🔥 مودال الإشعارات -->
     <div id="notifications-modal">
@@ -1800,13 +3439,22 @@
         </div>
     </div>
 
-    <!-- الهيدر المعدل مع زر الإدارة -->
+    <!-- الهيدر المعدل مع زر القائمة للجوال -->
     <header>
+        <!-- زر القائمة للجوال -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
         <div class="header-logo" onclick="location.reload()">
             <div class="header-logo-s">S</div>
             <div class="header-logo-txt">مستعمل سوريا</div>
         </div>
-        <div style="display:flex; align-items:center; gap:15px; position:relative;">
+        
+        <!-- محتوى الهيدر للشاشات الكبيرة -->
+        <div class="header-right-content">
             <!-- زر الإدارة (يظهر للمدراء والمالك) -->
             <button class="admin-btn" id="admin-header-btn" onclick="openAdminDashboard()">
                 لوحة التحكم
@@ -1835,17 +3483,26 @@
             </div>
             <button class="btn" onclick="checkAuthBeforePost()">+ رفع إعلان</button>
         </div>
+        
+        <!-- محتوى الهيدر للجوال -->
+        <div class="mobile-header-content">
+            <div style="position:relative; cursor:pointer; font-size:20px;" onclick="showNotifications()">
+                🔔
+                <div class="notification-badge" id="mobileHeaderNotificationBadge" style="display:none; position:absolute; top:-5px; right:-5px; background:var(--primary); color:white; width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">0</div>
+            </div>
+            <button class="btn" onclick="checkAuthBeforePost()" style="padding: 6px 12px; font-size: 12px;">+ رفع</button>
+        </div>
     </header>
 
     <!-- إعلان رئيسي -->
     <div class="ad-premium ad-premium-blue sticky-ad">
-        <h3 style="margin:0 0 10px 0;">🚀 اعلن عن منتجك هنا!</h3>
+        <h3 style="margin:0 0 10px 0; font-size:16px;">🚀 اعلن عن منتجك هنا!</h3>
         <p style="margin:0; font-size:14px;">وصل لألاف العملاء - سعر خاص للمتاجر</p>
     </div>
 
     <!-- البحث -->
     <div class="search-area">
-        <input type="text" class="search-input" placeholder="ابحث عن أي منتج..." id="searchInput">
+        <input type="text" class="search-input" placeholder="ابحث عن أي منتج..." id="searchInput" oninput="performSmartSearch()">
         <button class="btn" onclick="toggleCategories()" style="padding:0 20px;">الفئات</button>
         
         <!-- رابط الشروط في التذييل -->
@@ -1863,7 +3520,7 @@
     <div class="container">
         <!-- إعلان داخل المحتوى -->
         <div class="ad-premium ad-premium-green">
-            <h3 style="margin:0 0 10px 0;">🔥 عروض خاصة هذا الأسبوع!</h3>
+            <h3 style="margin:0 0 10px 0; font-size:16px;">🔥 عروض خاصة هذا الأسبوع!</h3>
             <p style="margin:0; font-size:14px;">خصم 30% على جميع الإعلانات المميزة</p>
         </div>
         
@@ -1882,7 +3539,7 @@
         
         <!-- إعلان في الأسفل -->
         <div class="ad-premium ad-premium-purple" style="margin-top:30px;">
-            <h3 style="margin:0 0 10px 0;">⭐ إعلانك هنا يصل لأكثر من 10,000 زائر يومياً</h3>
+            <h3 style="margin:0 0 10px 0; font-size:16px;">⭐ إعلانك هنا يصل لأكثر من 10,000 زائر يومياً</h3>
             <p style="margin:0; font-size:14px;">اضغط للاستفسار عن الأسعار</p>
         </div>
     </div>
@@ -2049,7 +3706,7 @@
 
     <!-- ============ صفحة المنتج الجديدة ============ -->
     <div id="product-layer">
-        <div class="nav-back" onclick="closeProduct()">← العودة</div>
+        <div class="nav-back" onclick="closeProduct()">العودة</div>
         <div class="product-container">
             <!-- إعلان في الأعلى -->
             <div class="ad-premium ad-premium-green" style="margin-bottom:30px;">
@@ -2082,9 +3739,36 @@
         </div>
     </div>
 
-    <!-- ============ الدردشة مع إعلانات ============ -->
+    <!-- ============ الدردشة المحسنة مع إرسال صوت وصورة وفيديو ============ -->
     <div id="chat-layer">
         <!-- سيتم تعبئته بالجافاسكريبت -->
+    </div>
+
+    <!-- 🔥 مسجل الصوت للدردشة -->
+    <div class="voice-recorder" id="voiceRecorder">
+        <div class="recording-indicator">
+            <div class="recording-dot"></div>
+            <div class="recording-timer" id="recordingTimer">00:00</div>
+        </div>
+        
+        <div class="recording-wave" id="recordingWave">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+        </div>
+        
+        <div class="recording-controls">
+            <button class="stop-btn" id="stopRecordingBtn">
+                ⏹️ إيقاف
+            </button>
+            <button class="cancel-btn" onclick="cancelRecording()">
+                ❌ إلغاء
+            </button>
+        </div>
     </div>
 
     <script>
@@ -2156,6 +3840,162 @@
         let loginProfilePic = null;
         let registerProfilePic = null;
         
+        // 🔥 متغيرات لتسجيل الصوت
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let recordingTimer = null;
+        let recordingSeconds = 0;
+        
+        // 🔥 🔥 🔥 نظام البحث الذكي الجديد 🔥 🔥 🔥
+        const smartSearchMap = {
+            // إلكترونيات
+            'جوال': ['موبايل', 'موبايلات', 'هاتف', 'جوالات', 'iphone', 'آيفون', 'ايفون', 'أيفون', 'هواتف', 'موبيل', 'جول'],
+            'موبايل': ['جوال', 'هاتف', 'موبايلات', 'جوالات', 'iphone', 'آيفون'],
+            'هاتف': ['جوال', 'موبايل', 'تليفون', 'موبايلات', 'جوالات'],
+            'iphone': ['آيفون', 'ايفون', 'أيفون', 'جوال', 'موبايل', 'هاتف'],
+            'آيفون': ['iphone', 'ايفون', 'أيفون', 'جوال', 'موبايل'],
+            'ايفون': ['iphone', 'آيفون', 'أيفون', 'جوال', 'موبايل'],
+            'أيفون': ['iphone', 'آيفون', 'ايفون', 'جوال', 'موبايل'],
+            'سامسونج': ['samsung', 'جالكسي', 'جالاكسي', 'جلكسي'],
+            'samsung': ['سامسونج', 'جالكسي', 'جالاكسي'],
+            'لاب': ['لابتوب', 'كمبيوتر محمول', 'لاب توب', 'لابتوب', 'لطوب'],
+            'لابتوب': ['لاب', 'كمبيوتر محمول', 'لاب توب'],
+            'كمبيوتر': ['حاسوب', 'كومبيوتر', 'حاسب', 'كمبيوتر مكتبي'],
+            'حاسوب': ['كمبيوتر', 'كومبيوتر', 'حاسب'],
+            
+            // سيارات
+            'سيارة': ['مركبة', 'عربية', 'سياره', 'عربه', 'مركب', 'سيار', 'عربيه'],
+            'سياره': ['سيارة', 'مركبة', 'عربية'],
+            'مركبة': ['سيارة', 'عربية', 'سياره'],
+            'عربية': ['سيارة', 'مركبة', 'سياره'],
+            
+            // عقارات
+            'منزل': ['بيت', 'دار', 'شقة', 'عقار', 'مسكن', 'سكن', 'منزل'],
+            'بيت': ['منزل', 'دار', 'مسكن'],
+            'شقة': ['شقه', 'أبارتمان', 'ابارتمان', 'أبارتمنت', 'شقق'],
+            'شقه': ['شقة', 'أبارتمان', 'ابارتمان'],
+            'عقار': ['منزل', 'بيت', 'شقة', 'عقارات'],
+            
+            // حالة المنتج
+            'جديد': ['نيو', 'new', 'مستعمل جديد', 'جديده', 'جديده', 'جديدون'],
+            'مستعمل': ['قديم', 'مستخدم', 'شبه جديد', 'مستعملة', 'مستعملون'],
+            'شبه جديد': ['مستعمل بحالة جيدة', 'شبه مستعمل', 'شبه جديده'],
+            'جيد': ['حسن', 'جيده', 'جيدة', 'جيدون'],
+            
+            // مدن
+            'دمشق': ['الشام', 'دمشق الشام', 'دمشقي'],
+            'حلب': ['حلب الشهباء', 'حلبي'],
+            'حمص': ['حمصي'],
+            'اللاذقية': ['اللاذقيه', 'اللاذقيا', 'لاذقي'],
+            
+            // عامة
+            'للبيع': ['للببع', 'بيع', 'معروض', 'مبيع', 'تبيع', 'يبيع'],
+            'مطلوب': ['أبحث عن', 'بحاجة', 'اريد', 'نريد', 'يطلب', 'اطلب'],
+            'شراء': ['شرا', 'اشتري', 'نشتري', 'يشتري', 'شرائه']
+        };
+        
+        // 🔥 دالة البحث الذكي المحسنة
+        function performSmartSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            const ads = JSON.parse(localStorage.getItem('mostaml_ads')) || [];
+            const grid = document.getElementById('main-ads-box');
+            
+            if (!searchTerm) {
+                // إذا كان البحث فارغاً، عرض جميع الإعلانات
+                loadAdsFromStorage();
+                return;
+            }
+            
+            // تقسيم كلمات البحث
+            const searchWords = searchTerm.toLowerCase().split(' ').filter(word => word.length > 0);
+            
+            // جمع كل الكلمات المشابهة
+            let allSearchWords = new Set();
+            
+            searchWords.forEach(word => {
+                // إضافة الكلمة الأصلية
+                allSearchWords.add(word);
+                
+                // إضافة المرادفات
+                if (smartSearchMap[word]) {
+                    smartSearchMap[word].forEach(synonym => {
+                        allSearchWords.add(synonym.toLowerCase());
+                    });
+                }
+                
+                // البحث عن الكلمات التي تحتوي على هذه الكلمة (للبحث الجزئي)
+                Object.keys(smartSearchMap).forEach(key => {
+                    if (key.includes(word) || word.includes(key)) {
+                        allSearchWords.add(key);
+                        smartSearchMap[key].forEach(synonym => {
+                            allSearchWords.add(synonym.toLowerCase());
+                        });
+                    }
+                });
+            });
+            
+            // تحويل الـ Set إلى Array
+            const searchPatterns = Array.from(allSearchWords);
+            
+            // تصفية الإعلانات
+            const filteredAds = ads.filter(ad => {
+                // جمع كل النصوص للبحث فيها
+                const searchText = `
+                    ${ad.title || ''}
+                    ${ad.desc || ''}
+                    ${ad.category || ''}
+                    ${ad.condition || ''}
+                    ${ad.governorate || ''}
+                    ${ad.seller || ''}
+                `.toLowerCase();
+                
+                // البحث عن أي من كلمات البحث في النص
+                return searchPatterns.some(pattern => {
+                    return searchText.includes(pattern);
+                });
+            });
+            
+            // عرض النتائج
+            if (grid) {
+                grid.innerHTML = '';
+                
+                if (filteredAds.length === 0) {
+                    // إذا لم توجد نتائج، عرض رسالة
+                    grid.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align:center; padding:40px; background:white; border-radius:15px;">
+                            <div style="font-size:60px; margin-bottom:20px;">🔍</div>
+                            <h3 style="color:#666;">لا توجد نتائج لـ "${searchTerm}"</h3>
+                            <p style="color:#999;">جرب البحث بكلمات أخرى مثل: جوال, موبايل, سيارة, منزل</p>
+                            <button class="btn" onclick="document.getElementById('searchInput').value=''; loadAdsFromStorage();" style="margin-top:20px;">
+                                عرض جميع الإعلانات
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    filteredAds.forEach(ad => displayAd(ad));
+                    
+                    // عرض عدد النتائج
+                    const resultsCount = document.createElement('div');
+                    resultsCount.style.cssText = 'grid-column: 1 / -1; text-align:center; padding:15px; background:#f8f9fa; border-radius:10px; margin-bottom:20px;';
+                    resultsCount.innerHTML = `عرض ${filteredAds.length} نتيجة لـ "<strong>${searchTerm}</strong>"`;
+                    grid.insertBefore(resultsCount, grid.firstChild);
+                }
+            }
+        }
+        
+        // 🔥 دالة البحث السريع (عند الضغط على Enter)
+        document.getElementById('searchInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSmartSearch();
+            }
+        });
+        
+        // 🔥 دالة مسح البحث
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            loadAdsFromStorage();
+        }
+        
         // 🔥 التهيئة
         window.onload = function() {
             // تحميل المستخدم الحالي
@@ -2163,6 +4003,7 @@
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
                 updateUserHeader();
+                updateMobileSidebar();
             }
             
             initCategories();
@@ -2171,11 +4012,193 @@
             chats = JSON.parse(localStorage.getItem('mostaml_chats')) || {};
             updateNotificationBadge();
             
+            // 🔥 تحميل الفئات للقائمة الجانبية
+            loadMobileCategories();
+            
             // 🔥 التحقق من وجود المالك الأساسي
             checkAndCreateOwner();
             
             showNotification('مرحباً بك في مستعمل سوريا! 🎉', 'success');
+            
+            // تحسينات للجوال
+            setupMobileEnhancements();
+            
+            // 🔥 إضافة زر مسح البحث إذا لم يكن موجوداً
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                const searchArea = document.querySelector('.search-area');
+                const clearBtn = document.createElement('button');
+                clearBtn.className = 'btn';
+                clearBtn.innerHTML = 'مسح';
+                clearBtn.style.padding = '0 15px';
+                clearBtn.style.fontSize = '12px';
+                clearBtn.onclick = clearSearch;
+                searchArea.insertBefore(clearBtn, searchInput.nextSibling);
+            }
         };
+        
+        // 🔥 تحميل الفئات للقائمة الجانبية
+        function loadMobileCategories() {
+            const container = document.getElementById('mobileCategoriesList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            // إضافة "جميع" أولاً
+            const allItem = document.createElement('div');
+            allItem.className = 'mobile-sidebar-item';
+            allItem.innerHTML = `
+                <i>📦</i>
+                <span>جميع الإعلانات</span>
+            `;
+            allItem.onclick = function() {
+                closeMobileMenu();
+                filterAdsByCategory('جميع');
+            };
+            container.appendChild(allItem);
+            
+            // إضافة باقي الفئات
+            categories.forEach(category => {
+                const item = document.createElement('div');
+                item.className = 'mobile-sidebar-item';
+                item.innerHTML = `
+                    <i>🏷️</i>
+                    <span>${category}</span>
+                `;
+                item.onclick = function() {
+                    closeMobileMenu();
+                    filterAdsByCategory(category);
+                };
+                container.appendChild(item);
+            });
+        }
+        
+        // 🔥 فتح وإغلاق القائمة الجانبية
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const overlay = document.getElementById('mobileSidebarOverlay');
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const overlay = document.getElementById('mobileSidebarOverlay');
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            menuBtn.classList.remove('active');
+        }
+        
+        // 🔥 تحديث القائمة الجانبية
+        function updateMobileSidebar() {
+            const mobileAvatar = document.getElementById('mobileAvatar');
+            const mobileUserName = document.getElementById('mobileUserName');
+            const mobileUserCity = document.getElementById('mobileUserCity');
+            const mobileNotificationBadge = document.getElementById('mobileNotificationBadge');
+            
+            if (currentUser) {
+                mobileUserName.textContent = currentUser.name;
+                mobileUserCity.textContent = currentUser.city;
+                
+                if (currentUser.profilePic) {
+                    mobileAvatar.innerHTML = `<img src="${currentUser.profilePic}" alt="صورة البروفايل" style="width:100%; height:100%; border-radius:50%;">`;
+                } else {
+                    mobileAvatar.innerHTML = currentUser.name.charAt(0);
+                }
+                
+                // تحديث إشعارات القائمة الجانبية
+                const unread = notifications.filter(n => !n.read).length;
+                if (unread > 0) {
+                    mobileNotificationBadge.style.display = 'flex';
+                    mobileNotificationBadge.textContent = unread > 9 ? '9+' : unread;
+                } else {
+                    mobileNotificationBadge.style.display = 'none';
+                }
+            } else {
+                mobileUserName.textContent = 'زائر';
+                mobileUserCity.textContent = '';
+                mobileAvatar.innerHTML = '👤';
+            }
+        }
+        
+        // 🔥 تحسينات إضافية للجوال
+        function setupMobileEnhancements() {
+            // منع التكبير على الأجهزة المحمولة
+            document.addEventListener('touchmove', function(event) {
+                if (event.scale !== 1) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+            
+            // تحسين أداء اللمس
+            document.addEventListener('touchstart', function() {}, { passive: true });
+            
+            // إضافة safe area للهواتف ذات الـ notch
+            updateSafeArea();
+            window.addEventListener('resize', updateSafeArea);
+            
+            // إخفاء لوحة المفاتيح عند النقر خارج الحقول
+            document.addEventListener('touchstart', function(e) {
+                if (!e.target.matches('input, textarea, select')) {
+                    document.activeElement.blur();
+                }
+            });
+        }
+        
+        function updateSafeArea() {
+            const style = document.createElement('style');
+            style.textContent = `
+                @supports (padding: max(0px)) {
+                    body {
+                        padding-left: env(safe-area-inset-left);
+                        padding-right: env(safe-area-inset-right);
+                        padding-top: env(safe-area-inset-top);
+                        padding-bottom: env(safe-area-inset-bottom);
+                    }
+                    
+                    header {
+                        padding-top: calc(12px + env(safe-area-inset-top));
+                        height: calc(60px + env(safe-area-inset-top));
+                    }
+                    
+                    @media (max-width: 768px) {
+                        header {
+                            padding-top: calc(10px + env(safe-area-inset-top));
+                            height: calc(56px + env(safe-area-inset-top));
+                        }
+                    }
+                    
+                    @media (max-width: 480px) {
+                        header {
+                            padding-top: calc(8px + env(safe-area-inset-top));
+                            height: calc(52px + env(safe-area-inset-top));
+                        }
+                    }
+                    
+                    .nav-back {
+                        padding-top: calc(15px + env(safe-area-inset-top));
+                        height: calc(56px + env(safe-area-inset-top));
+                    }
+                    
+                    @media (max-width: 480px) {
+                        .nav-back {
+                            padding-top: calc(12px + env(safe-area-inset-top));
+                            height: calc(52px + env(safe-area-inset-top));
+                        }
+                    }
+                    
+                    .mobile-sidebar {
+                        padding-top: env(safe-area-inset-top);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
         
         // 🔥 دالة إنشاء المالك الأساسي إذا لم يكن موجوداً
         function checkAndCreateOwner() {
@@ -2399,6 +4422,7 @@
             
             // تحديث الواجهة
             updateUserHeader();
+            updateMobileSidebar();
             closeAccountModal();
             
             // 🔥 رسالة ترحيب خاصة حسب الدور
@@ -2489,6 +4513,7 @@
             
             // تحديث الواجهة
             updateUserHeader();
+            updateMobileSidebar();
             closeAccountModal();
             showNotification('تم إنشاء حسابك بنجاح ' + name + '! 🎉', 'success');
             
@@ -2508,6 +4533,7 @@
                 currentUser = null;
                 localStorage.removeItem('currentUser');
                 updateUserHeader();
+                updateMobileSidebar();
                 showNotification('تم تسجيل الخروج', 'success');
             }
         }
@@ -2520,6 +4546,16 @@
             const headerAvatar = document.getElementById('header-user-avatar');
             const headerName = document.getElementById('header-user-name');
             const headerCity = document.getElementById('header-user-city');
+            const mobileHeaderNotificationBadge = document.getElementById('mobileHeaderNotificationBadge');
+            
+            // تحديث إشعارات الهيدر للجوال
+            const unread = notifications.filter(n => !n.read).length;
+            if (unread > 0) {
+                mobileHeaderNotificationBadge.style.display = 'flex';
+                mobileHeaderNotificationBadge.textContent = unread > 9 ? '9+' : unread;
+            } else {
+                mobileHeaderNotificationBadge.style.display = 'none';
+            }
             
             if (currentUser) {
                 userHeader.style.display = 'flex';
@@ -2901,6 +4937,7 @@
                     currentUser = user;
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     updateUserHeader();
+                    updateMobileSidebar();
                 }
                 
                 loadAdminUsers();
@@ -3056,6 +5093,7 @@
             }
             
             updateUserHeader();
+            updateMobileSidebar();
             loadAdsFromStorage();
             loadAdminStats();
             loadAdminAds();
@@ -3100,7 +5138,7 @@
         }
         
         // ========================
-        // 🔥 باقي الدوال الأصلية (بدون تغيير)
+        // 🔥 باقي الدوال الأصلية
         // ========================
         
         function showNotification(message, type = 'default') {
@@ -3145,6 +5183,21 @@
             } else {
                 badge.style.display = 'none';
             }
+            
+            // تحديث إشعارات الجوال أيضاً
+            const mobileHeaderBadge = document.getElementById('mobileHeaderNotificationBadge');
+            const mobileSidebarBadge = document.getElementById('mobileNotificationBadge');
+            
+            if (unread > 0) {
+                mobileHeaderBadge.style.display = 'flex';
+                mobileHeaderBadge.textContent = unread > 9 ? '9+' : unread;
+                
+                mobileSidebarBadge.style.display = 'flex';
+                mobileSidebarBadge.textContent = unread > 9 ? '9+' : unread;
+            } else {
+                mobileHeaderBadge.style.display = 'none';
+                mobileSidebarBadge.style.display = 'none';
+            }
         }
         
         function checkAuthBeforePost() {
@@ -3155,13 +5208,6 @@
                 openPost();
             }
         }
-        
-        // 🔥 باقي الدوال الأصلية لم تتغير (initCategories, addMainImage, removeMainImage, addExtraImage, updateExtraImagesDisplay, removeExtraImage, addVideo, updateVideosDisplay, removeVideo, validateAndPublish, resetUploadForm, loadAdsFromStorage, displayAd, openProduct, changeMainProductImage, openRecommendedProduct, closeProduct, requestProduct, sendPurchaseRequest, openChat, sendMessage, closeChat, toggleCategories, filterAdsByCategory, deleteAd)
-        // ... [يتم إضافة الدوال الأصلية هنا بدون تغيير] ...
-        
-        // ========================
-        // 🔥 نسخ الدوال الأصلية (تم اختصارها لتقليل الطول)
-        // ========================
         
         function initCategories() {
             const menu = document.getElementById('categoriesMenu');
@@ -3388,7 +5434,10 @@
                 seller: currentUser.name,
                 sellerId: currentUser.id,
                 sellerCity: currentUser.city,
-                sellerPhone: currentUser.phone
+                sellerPhone: currentUser.phone,
+                sold: false, // 🔥 إضافة علامة تم البيع
+                rating: 0, // 🔥 إضافة تقييم المنتج
+                ratingCount: 0
             };
             
             let ads = JSON.parse(localStorage.getItem('mostaml_ads')) || [];
@@ -3445,7 +5494,42 @@
                         media: [{url: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop", type: "image"}],
                         date: "اليوم",
                         time: "10:30",
-                        seller: "أحمد"
+                        seller: "أحمد",
+                        sold: false,
+                        rating: 4.5,
+                        ratingCount: 12
+                    },
+                    {
+                        id: 2,
+                        title: "جوال سامسونج نوت 20",
+                        price: "1,800,000 ل.س",
+                        desc: "جوال سامسونج نوت 20 بحالة ممتازة",
+                        category: "موبايلات",
+                        condition: "شبه جديد",
+                        governorate: "حلب",
+                        media: [{url: "https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?w=400&h=300&fit=crop", type: "image"}],
+                        date: "اليوم",
+                        time: "11:45",
+                        seller: "محمد",
+                        sold: true,
+                        rating: 4.8,
+                        ratingCount: 8
+                    },
+                    {
+                        id: 3,
+                        title: "لابتوب ديل كور i7",
+                        price: "3,200,000 ل.س",
+                        desc: "لابتوب ديل مع معالج كور i7 الجيل العاشر",
+                        category: "كمبيوترات",
+                        condition: "جيد",
+                        governorate: "حمص",
+                        media: [{url: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop", type: "image"}],
+                        date: "أمس",
+                        time: "14:20",
+                        seller: "خالد",
+                        sold: false,
+                        rating: 4.2,
+                        ratingCount: 5
                     }
                 ];
                 localStorage.setItem('mostaml_ads', JSON.stringify(ads));
@@ -3467,10 +5551,20 @@
             
             const mainMedia = ad.media[0];
             
+            // 🔥 إضافة علامة تم البيع إذا كان الإعلان مباع
+            let soldBadge = '';
+            let soldOverlay = '';
+            if (ad.sold) {
+                soldBadge = '<div class="sold-badge">✅ تم البيع</div>';
+                soldOverlay = '<div class="sold-overlay"></div>';
+            }
+            
             card.innerHTML = `
                 <div class="card-img-box">
                     <img src="${mainMedia.url}" alt="${ad.title}">
                     <div class="condition-badge">${ad.condition}</div>
+                    ${soldOverlay}
+                    ${soldBadge}
                 </div>
                 <h3 class="ad-title">${ad.title}</h3>
                 <div class="ad-price">${ad.price}</div>
@@ -3481,7 +5575,9 @@
                 <div style="font-size:11px; color:#888;">
                     👤 ${ad.seller || 'بائع'}
                 </div>
-                <button class="btn-request" onclick="event.stopPropagation(); requestProduct(${ad.id})">🛒 طلب المنتج</button>
+                <button class="btn-request" onclick="event.stopPropagation(); requestProduct(${ad.id})" ${ad.sold ? 'disabled style="background:#ccc;"' : ''}>
+                    ${ad.sold ? '✅ تم البيع' : '🛒 طلب المنتج'}
+                </button>
             `;
             
             card.onclick = () => openProduct(ad);
@@ -3504,6 +5600,9 @@
                             </button>
                             <button class="btn" onclick="editAdAdmin(${ad.id})" style="background:var(--primary); flex:1;">
                                 ✏️ تعديل الإعلان
+                            </button>
+                            <button class="btn" onclick="markAsSold(${ad.id})" style="background:var(--success); flex:1;">
+                                ${ad.sold ? '❌ إلغاء البيع' : '✅ تم البيع'}
                             </button>
                         </div>
                         <div style="font-size:12px; color:#666; margin-top:8px;">
@@ -3551,6 +5650,22 @@
                 `;
             }
             
+            // 🔥 تقييم المنتج
+            let ratingHTML = '';
+            if (ad.rating > 0) {
+                const stars = Math.round(ad.rating);
+                ratingHTML = `
+                    <div class="rating-system">
+                        <div class="rating-stars">
+                            ${Array(5).fill(0).map((_, i) => 
+                                `<span class="rating-star ${i < stars ? 'active' : ''}">★</span>`
+                            ).join('')}
+                        </div>
+                        <div class="rating-value">${ad.rating.toFixed(1)} (${ad.ratingCount || 0} تقييم)</div>
+                    </div>
+                `;
+            }
+            
             let sellerInfoHTML = '';
             if (ad.sellerId && currentUser && currentUser.id === ad.sellerId) {
                 sellerInfoHTML = `
@@ -3562,7 +5677,12 @@
                                 <div class="seller-city">يمكنك حذف الإعلان أو تعديله</div>
                             </div>
                         </div>
-                        <button class="btn" onclick="deleteAd(${ad.id})" style="background:var(--danger); width:100%; margin-top:10px;">حذف الإعلان</button>
+                        <div style="display:flex; gap:10px; margin-top:10px;">
+                            <button class="btn" onclick="markAsSold(${ad.id})" style="background:${ad.sold ? 'var(--danger)' : 'var(--success)'}; flex:1;">
+                                ${ad.sold ? '❌ إلغاء البيع' : '✅ تم البيع'}
+                            </button>
+                            <button class="btn" onclick="deleteAd(${ad.id})" style="background:var(--danger); flex:1;">حذف</button>
+                        </div>
                     </div>
                 `;
             } else if (ad.seller) {
@@ -3632,12 +5752,11 @@
                     <div class="product-info-section">
                         <h1 class="product-title">${ad.title}</h1>
                         
-                        <div class="product-rating">
-                            <div class="rating-stars">★★★★★</div>
-                            <span>5.0 (12 تقييم)</span>
-                        </div>
+                        ${ratingHTML}
                         
                         <div class="product-price">${ad.price}</div>
+                        
+                        ${ad.sold ? '<div style="background:#e8f5e9; color:#2e7d32; padding:10px; border-radius:8px; margin:10px 0; text-align:center; font-weight:bold;">✅ تم بيع هذا المنتج</div>' : ''}
                         
                         <div class="product-specs">
                             <div class="spec-item">
@@ -3674,10 +5793,10 @@
                         </div>
                         
                         <div class="product-actions">
-                            <button class="btn-request" onclick="sendPurchaseRequest()" style="flex:2; padding:15px; font-size:16px;">
-                                🛒 طلب شراء المنتج
+                            <button class="btn-request" onclick="sendPurchaseRequest()" style="flex:2; padding:15px; font-size:16px;" ${ad.sold ? 'disabled style="background:#ccc;"' : ''}>
+                                ${ad.sold ? '✅ تم البيع' : '🛒 طلب شراء المنتج'}
                             </button>
-                            <button class="btn" onclick="openChat()" style="flex:1; padding:15px;">
+                            <button class="btn" onclick="openEnhancedChat()" style="flex:1; padding:15px;" ${ad.sold ? 'disabled style="background:#ccc;"' : ''}>
                                 💬 مراسلة البائع
                             </button>
                         </div>
@@ -3688,6 +5807,26 @@
             `;
             
             document.getElementById('product-layer').style.display = 'block';
+        }
+        
+        // 🔥 علامة "تم البيع"
+        function markAsSold(adId) {
+            let ads = JSON.parse(localStorage.getItem('mostaml_ads')) || [];
+            const adIndex = ads.findIndex(ad => ad.id === adId);
+            
+            if (adIndex !== -1) {
+                ads[adIndex].sold = !ads[adIndex].sold;
+                localStorage.setItem('mostaml_ads', JSON.stringify(ads));
+                
+                const action = ads[adIndex].sold ? 'تم وضع علامة "تم البيع"' : 'تم إلغاء علامة "تم البيع"';
+                showNotification(`${action} على الإعلان`, 'success');
+                
+                loadAdsFromStorage();
+                if (currentAd && currentAd.id === adId) {
+                    currentAd = ads[adIndex];
+                    openProduct(currentAd);
+                }
+            }
         }
         
         function changeMainProductImage(index) {
@@ -3755,82 +5894,138 @@
             updateNotificationBadge();
             
             showNotification('✅ تم إرسال طلب الشراء! سيتم التواصل معك عبر الدردشة.', 'success');
-            setTimeout(openChat, 1000);
+            setTimeout(openEnhancedChat, 1000);
         }
         
-        function openChat() {
+        // 🔥 🔥 🔥 الدردشة المحسنة مع إرسال صوت وصورة وفيديو 🔥 🔥 🔥
+        function openEnhancedChat() {
             if (!currentAd) {
                 alert('اختر منتج أولاً');
                 return;
             }
             
-            const randomAd = adsList[Math.floor(Math.random() * adsList.length)];
-            
             const chatLayer = document.getElementById('chat-layer');
             chatLayer.innerHTML = `
                 <div class="chat-header">
-                    <span onclick="closeChat()" style="cursor:pointer;">✕</span>
-                    <div>💬 دردشة: ${currentAd.title.substring(0, 25)}${currentAd.title.length > 25 ? '...' : ''}</div>
-                </div>
-                
-                <div class="ad-premium ad-small ad-premium-${randomAd.type}" style="margin:0; border-radius:0;">
-                    <p style="margin:0; font-size:13px;">${randomAd.title}: ${randomAd.description}</p>
+                    <div class="chat-header-left">
+                        <span class="chat-back-btn" onclick="closeChat()">←</span>
+                        <div class="chat-title">💬 مراسلة البائع: ${currentAd.seller}</div>
+                    </div>
+                    <div style="color:var(--primary); font-size:12px; background:rgba(255,255,255,0.2); padding:4px 8px; border-radius:10px;">
+                        منتج: ${currentAd.title.substring(0, 15)}${currentAd.title.length > 15 ? '...' : ''}
+                    </div>
                 </div>
                 
                 <div class="chat-messages" id="chat-msgs">
                     <div class="msg received">
                         <div>مرحباً! 👋 أنا مهتم بمنتجك "${currentAd.title}"</div>
-                        <div style="font-size:11px; opacity:0.7; margin-top:5px;">${new Date().toLocaleTimeString('ar-SY')}</div>
+                        <div class="msg-time">${new Date().toLocaleTimeString('ar-SY')}</div>
                     </div>
                 </div>
                 
-                <div class="ad-premium ad-small ad-premium-green" style="margin:0; border-radius:0; border-top:1px solid rgba(255,255,255,0.2);">
-                    <p style="margin:0; font-size:13px;">💰 إعلانك هنا يصل للمشترين المهتمين</p>
+                <!-- 🔥 أزرار الوسائط المتعددة -->
+                <div class="chat-media-buttons">
+                    <button class="media-btn photo" onclick="sendPhoto()" title="إرسال صورة">
+                        📷
+                    </button>
+                    <button class="media-btn video" onclick="sendVideo()" title="إرسال فيديو">
+                        🎬
+                    </button>
+                    <button class="media-btn audio" onclick="startRecording()" title="تسجيل صوت">
+                        🎤
+                    </button>
                 </div>
                 
+                <!-- 🔥 حقل الإدخال المحسن -->
                 <div class="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="اكتب رسالتك..." 
-                           onkeypress="if(event.key === 'Enter') sendMessage()">
-                    <button onclick="sendMessage()">إرسال</button>
+                    <div class="chat-input-container">
+                        <input type="text" id="chat-input" placeholder="اكتب رسالتك هنا..." 
+                               onkeypress="if(event.key === 'Enter') sendEnhancedMessage()">
+                    </div>
+                    <button class="chat-send-btn" onclick="sendEnhancedMessage()">
+                        ➤
+                    </button>
                 </div>
             `;
             
             chatLayer.style.display = 'flex';
             document.getElementById('chat-input').focus();
             
-            setTimeout(() => {
-                const chatMsgs = document.getElementById('chat-msgs');
-                const welcomeMsg = document.createElement('div');
-                welcomeMsg.className = 'msg received';
-                welcomeMsg.innerHTML = `
-                    <div>مرحباً بك! 😊 أنا البائع. كيف يمكنني مساعدتك بخصوص ${currentAd.title}؟</div>
-                    <div style="font-size:11px; opacity:0.7; margin-top:5px;">${new Date().toLocaleTimeString('ar-SY')}</div>
-                `;
-                chatMsgs.appendChild(welcomeMsg);
-                chatMsgs.scrollTop = chatMsgs.scrollHeight;
-            }, 1000);
+            // 🔥 تحميل محادثات سابقة
+            loadChatMessages();
         }
         
-        function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim();
-            
-            if (!text) return;
-            
+        function loadChatMessages() {
             const chatMsgs = document.getElementById('chat-msgs');
             
-            const sentMsg = document.createElement('div');
-            sentMsg.className = 'msg sent';
-            sentMsg.innerHTML = `
-                <div>${text}</div>
-                <div style="font-size:11px; opacity:0.7; margin-top:5px;">${new Date().toLocaleTimeString('ar-SY')}</div>
-            `;
-            chatMsgs.appendChild(sentMsg);
-            input.value = '';
+            // تحميل محادثات سابقة من localStorage
+            const chatId = `chat_${currentAd.id}`;
+            const savedMessages = JSON.parse(localStorage.getItem(chatId)) || [];
             
+            savedMessages.forEach(msg => {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `msg ${msg.type}`;
+                
+                if (msg.mediaType === 'image') {
+                    msgDiv.innerHTML = `
+                        <div class="media-msg ${msg.type}">
+                            <div class="media-preview">
+                                <img src="${msg.content}" alt="صورة">
+                            </div>
+                            <div class="media-info">
+                                <span class="media-icon">📷</span>
+                                <span>صورة</span>
+                            </div>
+                        </div>
+                        <div class="msg-time">${msg.time}</div>
+                    `;
+                } else if (msg.mediaType === 'video') {
+                    msgDiv.innerHTML = `
+                        <div class="media-msg ${msg.type}">
+                            <div class="media-preview">
+                                <video controls>
+                                    <source src="${msg.content}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="media-info">
+                                <span class="media-icon">🎬</span>
+                                <span>فيديو</span>
+                            </div>
+                        </div>
+                        <div class="msg-time">${msg.time}</div>
+                    `;
+                } else if (msg.mediaType === 'audio') {
+                    msgDiv.innerHTML = `
+                        <div class="media-msg ${msg.type}">
+                            <div class="audio-player">
+                                <audio controls>
+                                    <source src="${msg.content}" type="audio/wav">
+                                </audio>
+                            </div>
+                            <div class="media-info">
+                                <span class="media-icon">🎤</span>
+                                <span>رسالة صوتية</span>
+                            </div>
+                        </div>
+                        <div class="msg-time">${msg.time}</div>
+                    `;
+                } else {
+                    msgDiv.innerHTML = `
+                        <div>${msg.content}</div>
+                        <div class="msg-time">${msg.time}</div>
+                    `;
+                }
+                
+                chatMsgs.appendChild(msgDiv);
+            });
+            
+            chatMsgs.scrollTop = chatMsgs.scrollHeight;
+            
+            // 🔥 رد تلقائي من البائع
             setTimeout(() => {
                 const replies = [
-                    "نعم، المنتج متوفر ✅",
+                    "مرحباً! شكراً لاهتمامك بمنتجي 😊",
+                    "نعم، المنتج متوفر حالياً ✅",
                     "السعر قابل للتفاوض قليلاً 💰",
                     "يمكنني توصيله خلال 24 ساعة 🚚",
                     "المنتج بحالة ممتازة كما في الصور ✨",
@@ -3839,42 +6034,250 @@
                 
                 const randomReply = replies[Math.floor(Math.random() * replies.length)];
                 
-                const receivedMsg = document.createElement('div');
-                receivedMsg.className = 'msg received';
-                receivedMsg.innerHTML = `
-                    <div>${randomReply}</div>
-                    <div style="font-size:11px; opacity:0.7; margin-top:5px;">${new Date().toLocaleTimeString('ar-SY')}</div>
-                `;
-                chatMsgs.appendChild(receivedMsg);
-                
-                setTimeout(() => {
-                    const adTypes = ['blue', 'green', 'purple', 'red'];
-                    const randomAdType = adTypes[Math.floor(Math.random() * adTypes.length)];
-                    
-                    const adMsg = document.createElement('div');
-                    adMsg.style.cssText = `
-                        text-align: center;
-                        margin: 10px;
-                        padding: 8px;
-                        background: linear-gradient(135deg, var(--${randomAdType}), #2c3e50);
-                        color: white;
-                        border-radius: 10px;
-                        font-size: 12px;
-                        cursor: pointer;
-                    `;
-                    adMsg.innerHTML = `💰 <strong>إعلان:</strong> روج لمنتجك على مستعمل سوريا`;
-                    adMsg.onclick = () => showNotification('🚀 تواصل معنا للإعلان: 0999999999', 'info');
-                    chatMsgs.appendChild(adMsg);
-                }, 500);
-                
-                chatMsgs.scrollTop = chatMsgs.scrollHeight;
-            }, 1000 + Math.random() * 1000);
+                addMessageToChat(randomReply, 'received', 'text');
+            }, 1000);
+        }
+        
+        function sendEnhancedMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
             
+            if (!text) return;
+            
+            addMessageToChat(text, 'sent', 'text');
+            input.value = '';
+            
+            // 🔥 رد ذكي من البائع بعد 1-3 ثوان
+            setTimeout(() => {
+                const smartReplies = {
+                    'سعر': ["السعر ${currentAd.price} 💰", "السعر قابل للتفاوض 👍", "ما هو السعر الذي تتوقعه؟ 🤔"],
+                    'حالة': ["المنتج بحالة ${currentAd.condition} ✨", "الحالة ممتازة كما في الصور 😊"],
+                    'توصيل': ["التوصيل متاح 🚚", "يمكن التوصيل خلال 24 ساعة ⏰"],
+                    'ضمان': ["هناك ضمان 3 أيام ✅", "يمكنك فحص المنتج قبل الشراء 🔍"]
+                };
+                
+                let reply = "شكراً على سؤالك! هل تحتاج إلى معلومات أخرى؟ 😊";
+                
+                for (const [keyword, replies] of Object.entries(smartReplies)) {
+                    if (text.includes(keyword)) {
+                        reply = replies[Math.floor(Math.random() * replies.length)];
+                        break;
+                    }
+                }
+                
+                // استبدال المتغيرات في الرد
+                reply = reply.replace('${currentAd.price}', currentAd.price);
+                reply = reply.replace('${currentAd.condition}', currentAd.condition);
+                
+                addMessageToChat(reply, 'received', 'text');
+            }, 1000 + Math.random() * 2000);
+        }
+        
+        function addMessageToChat(content, type, mediaType = 'text') {
+            const chatMsgs = document.getElementById('chat-msgs');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `msg ${type}`;
+            
+            const time = new Date().toLocaleTimeString('ar-SY');
+            
+            if (mediaType === 'image') {
+                msgDiv.innerHTML = `
+                    <div class="media-msg ${type}">
+                        <div class="media-preview">
+                            <img src="${content}" alt="صورة">
+                        </div>
+                        <div class="media-info">
+                            <span class="media-icon">📷</span>
+                            <span>صورة</span>
+                        </div>
+                    </div>
+                    <div class="msg-time">${time}</div>
+                `;
+            } else if (mediaType === 'video') {
+                msgDiv.innerHTML = `
+                    <div class="media-msg ${type}">
+                        <div class="media-preview">
+                            <video controls>
+                                <source src="${content}" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="media-info">
+                            <span class="media-icon">🎬</span>
+                            <span>فيديو</span>
+                        </div>
+                    </div>
+                    <div class="msg-time">${time}</div>
+                `;
+            } else if (mediaType === 'audio') {
+                msgDiv.innerHTML = `
+                    <div class="media-msg ${type}">
+                        <div class="audio-player">
+                            <audio controls>
+                                <source src="${content}" type="audio/wav">
+                            </audio>
+                        </div>
+                        <div class="media-info">
+                            <span class="media-icon">🎤</span>
+                            <span>رسالة صوتية</span>
+                        </div>
+                    </div>
+                    <div class="msg-time">${time}</div>
+                `;
+            } else {
+                msgDiv.innerHTML = `
+                    <div>${content}</div>
+                    <div class="msg-time">${time}</div>
+                `;
+            }
+            
+            chatMsgs.appendChild(msgDiv);
             chatMsgs.scrollTop = chatMsgs.scrollHeight;
+            
+            // 🔥 حفظ الرسالة في localStorage
+            saveMessageToStorage(content, type, mediaType, time);
+        }
+        
+        function saveMessageToStorage(content, type, mediaType, time) {
+            const chatId = `chat_${currentAd.id}`;
+            const messages = JSON.parse(localStorage.getItem(chatId)) || [];
+            
+            messages.push({
+                content: content,
+                type: type,
+                mediaType: mediaType,
+                time: time
+            });
+            
+            localStorage.setItem(chatId, JSON.stringify(messages));
+        }
+        
+        // 🔥 إرسال صورة
+        function sendPhoto() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    addMessageToChat(e.target.result, 'sent', 'image');
+                    
+                    // 🔥 رد تلقائي على الصورة
+                    setTimeout(() => {
+                        addMessageToChat('شكراً على الصورة! المنتج مشابه تماماً كما في صورتي 📸', 'received', 'text');
+                    }, 1500);
+                };
+                reader.readAsDataURL(file);
+            };
+            
+            input.click();
+        }
+        
+        // 🔥 إرسال فيديو
+        function sendVideo() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'video/*';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                if (file.size > 10 * 1024 * 1024) { // 10MB
+                    showNotification('حجم الفيديو كبير جداً (الحد الأقصى 10MB)', 'warning');
+                    return;
+                }
+                
+                const url = URL.createObjectURL(file);
+                addMessageToChat(url, 'sent', 'video');
+                
+                // 🔥 رد تلقائي على الفيديو
+                setTimeout(() => {
+                    addMessageToChat('فيديو رائع! شكراً على التوضيح 🎬', 'received', 'text');
+                }, 1500);
+            };
+            
+            input.click();
+        }
+        
+        // 🔥 تسجيل صوت
+        function startRecording() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showNotification('المتصفح لا يدعم تسجيل الصوت', 'error');
+                return;
+            }
+            
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+                    
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        
+                        // إضافة رسالة صوتية إلى الدردشة
+                        addMessageToChat(audioUrl, 'sent', 'audio');
+                        
+                        // إيقاف الميكروفون
+                        stream.getTracks().forEach(track => track.stop());
+                        
+                        // 🔥 رد تلقائي على الرسالة الصوتية
+                        setTimeout(() => {
+                            addMessageToChat('شكراً على الرسالة الصوتية! سأعود إليك قريباً 🎤', 'received', 'text');
+                        }, 1500);
+                    };
+                    
+                    // بدء التسجيل
+                    mediaRecorder.start();
+                    
+                    // عرض مسجل الصوت
+                    document.getElementById('voiceRecorder').classList.add('active');
+                    
+                    // بدء المؤقت
+                    recordingSeconds = 0;
+                    recordingTimer = setInterval(() => {
+                        recordingSeconds++;
+                        const minutes = Math.floor(recordingSeconds / 60);
+                        const seconds = recordingSeconds % 60;
+                        document.getElementById('recordingTimer').textContent = 
+                            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }, 1000);
+                    
+                    // زر إيقاف التسجيل
+                    document.getElementById('stopRecordingBtn').onclick = () => {
+                        mediaRecorder.stop();
+                        clearInterval(recordingTimer);
+                        document.getElementById('voiceRecorder').classList.remove('active');
+                    };
+                })
+                .catch(err => {
+                    showNotification('خطأ في الوصول إلى الميكروفون: ' + err.message, 'error');
+                });
+        }
+        
+        function cancelRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
+            clearInterval(recordingTimer);
+            document.getElementById('voiceRecorder').classList.remove('active');
         }
         
         function closeChat() {
             document.getElementById('chat-layer').style.display = 'none';
+            
+            // إيقاف أي تسجيل صوتي جاري
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
         }
         
         function toggleCategories() {
@@ -3920,21 +6323,12 @@
             showNotification('تم حذف الإعلان', 'success');
         }
         
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const term = this.value.toLowerCase();
-            const ads = document.querySelectorAll('.ad-card');
-            
-            ads.forEach(ad => {
-                const title = ad.querySelector('.ad-title').textContent.toLowerCase();
-                if (title.includes(term)) {
-                    ad.style.display = 'block';
-                } else {
-                    ad.style.display = 'none';
-                }
-            });
-        });
+        // 🔥 تم إزالة البحث القديم واستبداله بنظام البحث الذكي
         
-        // 🔥 دالة مودال الإشعارات (لا تتغير)
+        // ========================
+        // 🔥 دالة مودال الإشعارات
+        // ========================
+        
         function showNotifications() {
             const modal = document.getElementById('notifications-modal');
             const list = document.getElementById('notifications-list');
@@ -4080,5 +6474,25 @@
             resetUploadForm();
         }
     </script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCLrmYOP756pzA6F1PfgxODlZOJiYt408s",
+    authDomain: "mostaml-syria-5613f.firebaseapp.com",
+    databaseURL: "https://mostaml-syria-5613f-default-rtdb.firebaseio.com",
+    projectId: "mostaml-syria-5613f",
+    storageBucket: "mostaml-syria-5613f.firebasestorage.app",
+    messagingSenderId: "516945765729",
+    appId: "1:516945765729:web:1b97da284fc2e090965120"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 </body>
 </html>
